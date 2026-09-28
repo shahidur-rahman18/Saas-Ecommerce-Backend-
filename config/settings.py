@@ -99,13 +99,13 @@ DATABASE_ROUTERS = (
 )
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django_tenants.postgresql_backend',  # [UPDATED]: মাল্টি-স্কিমা ডাটাবেজ ইঞ্জিন
-        'NAME': os.environ.get('POSTGRES_DB', 'saas_db'),
-        'USER': os.environ.get('POSTGRES_USER', 'postgres'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'postgres'),
-        'HOST': 'db',  # docker-compose.yml ফাইলের সার্ভিস নাম
-        'PORT': '5432',
+     'default': {
+        'ENGINE': 'django_tenants.postgresql_backend',
+        'NAME': os.environ.get('POSTGRES_DB'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': os.environ.get('POSTGRES_HOST'),
+        'PORT': os.environ.get('POSTGRES_PORT', '5432'),
     }
 }
 
