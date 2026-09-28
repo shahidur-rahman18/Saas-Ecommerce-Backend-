@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  # ১. মূল জ্যাঙ্গো ওয়েব ইঞ্জিন
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+
+  # ২. পোস্টগ্রেসকিউএল মাল্টি-টেন্যান্ট ডাটাবেজ
+  db:
+    image: postgres:16-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+
+  # ৩. রেডিস ক্যাশ ও মেসেজ ব্রোকার
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  # ৪. সেলারি ওয়ার্কার (অ্যাসিঙ্ক টাস্ক ইঞ্জিন)
+  celery_worker:
+    build: .
+    command: celery -A config worker -l info
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - web
+      - redis
+
+  # ৫. সেলারি বিট (শিডিউলড ক্রোন ইঞ্জিন)
+  celery_beat:
+    build: .
+    command: celery -A config beat -l info
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - web
+      - redis
+
+volumes:
+  postgres_data:

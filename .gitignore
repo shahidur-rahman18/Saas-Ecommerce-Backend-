@@ -1,0 +1,32 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables (SECURITY - NEVER COMMIT THIS)
+.env
+.env.local
+.env.*.local
+
+# Database files
+*.sqlite3
+*.db
+
+# VS Code & IDE settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker / Dev Containers local states
+.devcontainer/
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Virtual Environment (if created locally)
+venv/
+env/
+ENV/
