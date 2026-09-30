@@ -28,12 +28,16 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 
+# [UPDATED]: Custom User Model নির্দেশ করা হলো
+AUTH_USER_MODEL = 'accounts.User'
+
 # Application definition
 
 SHARED_APPS = (
     'django_tenants',  # [UPDATED]: অবশ্যই সব অ্যাপের উপরে রাখতে হবে
     'tenants',         # [UPDATED]: আমাদের সেন্ট্রাল টেন্যান্ট ও ডোমেন ম্যানেজমেন্ট অ্যাপ
-
+    'accounts',        # [ADDED]: সেন্ট্রাল ইউজার এবং রোল ম্যানেজমেন্ট অ্যাপ
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -154,3 +158,9 @@ CELERY_BROKER_URL = 'redis://redis:6379/0'
 CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
+
+
+
+
+# terminal run command 
+#  docker compose up -d
